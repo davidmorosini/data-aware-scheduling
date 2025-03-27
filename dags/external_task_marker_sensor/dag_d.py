@@ -18,7 +18,7 @@ with DAG(
     sensor_dag_b = ExternalTaskSensor(
         task_id="sensor_dag_b",
         external_dag_id="external_dag_b",
-        external_task_ids=["ets_dag_d"],
+        external_task_ids=["etm_dag_c"],
         timeout=600,
         poll_interval=10,
         execution_delta=timedelta(hours=2, minutes=30),

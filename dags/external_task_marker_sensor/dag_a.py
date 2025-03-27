@@ -29,11 +29,11 @@ with DAG(
         python_callable=lambda: time.sleep(10),
     )
 
-    ets_dag_c = ExternalTaskMarker(
-        task_id="ets_dag_c",
-        external_dag_id="dag_c",
-        external_task_id="sensor_dag_a",
+    etm_dag_c = ExternalTaskMarker(
+        task_id="etm_dag_c",
+        external_dag_id="external_dag_c",
+        external_task_id="ets_dag_a",
         execution_date="{{ (logical_date + macros.timedelta(hours=1)).isoformat() }}"
     )
-    task_1 >> ets_dag_c
-    task_2 >> task_3 >> ets_dag_c
+    task_1 >> etm_dag_c
+    task_2 >> task_3 >> etm_dag_c

@@ -15,8 +15,8 @@ with DAG(
     tags=["dag_c"],
 ) as child_dag:
 
-    sensor_dag_a = ExternalTaskSensor(
-        task_id="sensor_dag_a",
+    ets_dag_a = ExternalTaskSensor(
+        task_id="ets_dag_a",
         external_dag_id="external_dag_a",
         external_task_ids=["task_1", "task_3"],
         timeout=600,
@@ -27,10 +27,10 @@ with DAG(
         deferrable=True,
     )
 
-    sensor_dag_b = ExternalTaskSensor(
-        task_id="sensor_dag_b",
+    ets_dag_b = ExternalTaskSensor(
+        task_id="ets_dag_b",
         external_dag_id="external_dag_b",
-        external_task_ids=["ets_dag_c"],
+        external_task_ids=["etm_dag_c"],
         timeout=600,
         poll_interval=10,
         execution_delta=timedelta(hours=1, minutes=30),
@@ -43,4 +43,4 @@ with DAG(
         task_id="task",
         python_callable=lambda: time.sleep(10),
     )
-    [sensor_dag_a, sensor_dag_b]  >> task
+    [ets_dag_a, ets_dag_b]  >> task
