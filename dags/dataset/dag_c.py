@@ -4,16 +4,18 @@ from airflow.models.dag import DAG
 from airflow.datasets import Dataset
 from airflow.operators.python import PythonOperator
 
+from airflow.timetables.datasets import DatasetOrTimeSchedule
+from airflow.timetables.trigger import CronTriggerTimetable
 
-trigger_datasets = [
-    Dataset("dag_a_event_1"),
-    Dataset("dag_b_event_1")
-]
+
+a = Dataset("dag_a_event_1")
+b = Dataset("dag_b_event_1")
+trigger_datasets = [a, b]
 
 with DAG(
     dag_id="dag_c",
     start_date=datetime(2025, 1, 1, 0, 0, 0),
-    schedule=trigger_datasets,
+    schedule=(a & b),
     catchup=True,
 ):
 
