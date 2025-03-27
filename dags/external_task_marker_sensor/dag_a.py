@@ -32,7 +32,7 @@ with DAG(
     etm_dag_c = ExternalTaskMarker(
         task_id="etm_dag_c",
         external_dag_id="external_dag_c",
-        external_task_id="ets_dag_a",
+        external_task_id="task_1",
         execution_date="{{ (logical_date + macros.timedelta(hours=1)).isoformat() }}"
     )
     task_1 >> etm_dag_c

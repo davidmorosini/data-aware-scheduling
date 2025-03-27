@@ -1,10 +1,8 @@
 import pendulum
-from datetime import timedelta
 import time
 
 from airflow.models.dag import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.sensors.external_task import ExternalTaskSensor
 
 
 with DAG(
@@ -15,20 +13,13 @@ with DAG(
     tags=["dag_d"],
 ) as child_dag:
 
-    sensor_dag_b = ExternalTaskSensor(
-        task_id="sensor_dag_b",
-        external_dag_id="external_dag_b",
-        external_task_ids=["etm_dag_c"],
-        timeout=600,
-        poll_interval=10,
-        execution_delta=timedelta(hours=2, minutes=30),
-        allowed_states=["success"],
-        failed_states=["failed", "skipped"],
-        deferrable=True,
-    )
-
-    task = PythonOperator(
-        task_id="sleep_task",
+    task_1 = PythonOperator(
+        task_id="task_1",
         python_callable=lambda: time.sleep(10),
     )
-    sensor_dag_b  >> task
+
+    task_2 = PythonOperator(
+        task_id="task_2",
+        python_callable=lambda: time.sleep(10),
+    )
+    task_1  >> task_2

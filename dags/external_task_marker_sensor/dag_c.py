@@ -18,7 +18,7 @@ with DAG(
     ets_dag_a = ExternalTaskSensor(
         task_id="ets_dag_a",
         external_dag_id="external_dag_a",
-        external_task_ids=["task_1", "task_3"],
+        external_task_ids=["task_1", "task_2"],
         timeout=600,
         poll_interval=10,
         execution_delta=timedelta(hours=1),
@@ -39,8 +39,8 @@ with DAG(
         deferrable=True,
     )
 
-    task = PythonOperator(
-        task_id="task",
+    task_1 = PythonOperator(
+        task_id="task_1",
         python_callable=lambda: time.sleep(10),
     )
-    [ets_dag_a, ets_dag_b]  >> task
+    [ets_dag_a, ets_dag_b]  >> task_1
