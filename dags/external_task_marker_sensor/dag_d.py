@@ -20,6 +20,6 @@ with DAG(
 
     task_2 = PythonOperator(
         task_id="task_2",
-        python_callable=lambda: time.sleep(10),
+        python_callable=lambda: time.sleep(100),
     )
     task_1  >> task_2
